@@ -1,0 +1,23 @@
+version: '3.9'
+
+services:
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: 123456
+      POSTGRES_USER: postgres
+      POSTGRES_DB: testing
+    volumes:
+      - .pgdata:/var/lib/postgresql
+    ports:
+      - 5433:5432
+
+  app:
+    build: .
+    ports:
+      - 8000:4000
+    volumes:
+      - .:/usr/src/app
+    depends_on:
+      - db
